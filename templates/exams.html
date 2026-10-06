@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exam Timetable | CollegeConnect</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="section-page">
+<header class="section-hero">
+    <div class="section-hero-inner">
+        <div class="section-kicker">ACADEMIC SCHEDULE</div>
+        <h1>Exam Timetable</h1>
+        <p>View examination dates, timings, rooms and examination types.</p>
+    </div>
+</header>
+<main class="section-main">
+    <div class="page-toolbar">
+        {% if session.get("role") == "admin" %}
+        <a href="/admin" class="back-link">← Faculty Dashboard</a>
+        {% else %}
+        <a href="/" class="back-link">← CollegeConnect Home</a>
+        {% endif %}
+        {% if session.get("role") == "admin" %}<a href="/add-exam" class="add-button">+ Add Exam</a>{% endif %}
+    </div>
+    <section class="content-heading">
+        <div>
+            <span class="eyebrow">EXAM SCHEDULE</span>
+            <h2>Upcoming examinations</h2>
+        </div>
+        <span class="record-label">TIMETABLE</span>
+    </section>
+    {% if exams %}
+<div class="data-list">
+{% for exam in exams %}
+<article class="data-card">
+<div class="card-accent"></div>
+<div class="data-card-top"><span class="item-icon">📝</span>
+{% if session.get("role") == "admin" %}<form method="POST" action="/delete-exam/{{ exam['id'] }}" onsubmit="return confirm('Delete this examination entry?');"><button type="submit" class="delete-button">Delete</button></form>{% endif %}
+</div>
+<h3>{{ exam["subject"] }}</h3>
+<div class="detail-grid">
+<div><span>DATE</span><strong>📅 {{ exam["date"] }}</strong></div>
+<div><span>TIME</span><strong>🕐 {{ exam["time"] }}</strong></div>
+<div><span>ROOM</span><strong>🚪 {{ exam["room"] }}</strong></div>
+<div><span>TYPE</span><strong>{{ exam["exam_type"] }}</strong></div>
+</div>
+</article>
+{% endfor %}
+</div>
+{% else %}<div class="empty-state"><span>📝</span><h3>No examinations yet</h3><p>The examination timetable will appear here.</p></div>{% endif %}
+</main>
+</body>
+</html>

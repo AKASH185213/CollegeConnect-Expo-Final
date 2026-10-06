@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documents | CollegeConnect</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="section-page">
+<header class="section-hero">
+    <div class="section-hero-inner">
+        <div class="section-kicker">ACADEMIC RESOURCES</div>
+        <h1>Documents</h1>
+        <p>Access important academic resources and useful campus documents.</p>
+    </div>
+</header>
+<main class="section-main">
+    <div class="page-toolbar">
+        {% if session.get("role") == "admin" %}
+        <a href="/admin" class="back-link">← Faculty Dashboard</a>
+        {% else %}
+        <a href="/" class="back-link">← CollegeConnect Home</a>
+        {% endif %}
+        {% if session.get("role") == "admin" %}<a href="/add-document" class="add-button">+ Add Document</a>{% endif %}
+    </div>
+    <section class="content-heading">
+        <div>
+            <span class="eyebrow">RESOURCE CENTER</span>
+            <h2>Important documents</h2>
+        </div>
+        <span class="record-label">RESOURCES</span>
+    </section>
+    {% if documents %}
+<div class="data-list">
+{% for document in documents %}
+<article class="data-card">
+<div class="card-accent"></div>
+<div class="data-card-top"><span class="item-icon">📄</span>
+{% if session.get("role") == "admin" %}<form method="POST" action="/delete-document/{{ document['id'] }}" onsubmit="return confirm('Delete this document?');"><button type="submit" class="delete-button">Delete</button></form>{% endif %}
+</div>
+<h3>{{ document["title"] }}</h3>
+<p class="main-copy">{{ document["description"] }}</p>
+<div class="document-footer"><span>RESOURCE</span><a href="{{ document['link'] }}" target="_blank" rel="noopener" class="open-button">Open Document →</a></div>
+</article>
+{% endfor %}
+</div>
+{% else %}<div class="empty-state"><span>📄</span><h3>No documents yet</h3><p>Important academic resources and links will appear here.</p></div>{% endif %}
+</main>
+</body>
+</html>

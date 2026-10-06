@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Add Event | CollegeConnect</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="form-page">
+<header class="form-hero">
+<div class="form-hero-inner">
+<div class="section-kicker">FACULTY CONTROL CENTER</div>
+<h1>Create Event</h1>
+<p>Add an upcoming activity to the campus calendar.</p>
+</div>
+</header>
+<main class="form-main">
+<div class="form-navigation">
+<a href="/admin" class="back-link">← Faculty Dashboard</a>
+<a href="/events" class="secondary-link">View Events</a>
+</div>
+<section class="form-shell">
+<div class="form-shell-heading">
+<span class="eyebrow">NEW ENTRY</span>
+<h2>Event details</h2>
+<p>Fill in the details below and publish when everything is ready.</p>
+</div>
+<form method="POST" class="elegant-form">
+<div class="form-field"><label for="name">Event Name</label><input id="name" type="text" name="name" placeholder="Example: Freshers Day" required></div>
+<div class="form-row"><div class="form-field"><label for="date">Date</label><input id="date" type="date" name="date" required></div><div class="form-field"><label for="time">Time</label><input id="time" type="time" name="time" required></div></div>
+<div class="form-field"><label for="location">Location</label><input id="location" type="text" name="location" placeholder="Example: College Auditorium" required></div>
+<div class="form-field"><label for="description">Description</label><textarea id="description" name="description" placeholder="Describe the event..." required></textarea></div>
+<div class="form-field"><label for="organized_by">Organized By</label><input id="organized_by" type="text" name="organized_by" placeholder="Example: CSE Department" required></div>
+<button type="submit" class="form-submit"><span>Publish Event</span><span>→</span></button>
+</form>
+</section>
+</main>
+</body>
+</html>

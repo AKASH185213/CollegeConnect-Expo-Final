@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Announcements | CollegeConnect</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="section-page">
+<header class="section-hero">
+    <div class="section-hero-inner">
+        <div class="section-kicker">CAMPUS INFORMATION</div>
+        <h1>Announcements</h1>
+        <p>Stay informed with the latest notices and important campus updates.</p>
+    </div>
+</header>
+<main class="section-main">
+    <div class="page-toolbar">
+        {% if session.get("role") == "admin" %}
+        <a href="/admin" class="back-link">← Faculty Dashboard</a>
+        {% else %}
+        <a href="/" class="back-link">← CollegeConnect Home</a>
+        {% endif %}
+        {% if session.get("role") == "admin" %}<a href="/add-announcement" class="add-button">+ Add Announcement</a>{% endif %}
+    </div>
+    <section class="content-heading">
+        <div>
+            <span class="eyebrow">LATEST UPDATES</span>
+            <h2>Campus notices</h2>
+        </div>
+        <span class="record-label">LIVE FEED</span>
+    </section>
+    {% if announcements %}
+<div class="data-list">
+{% for announcement in announcements %}
+<article class="data-card">
+<div class="card-accent"></div>
+<div class="data-card-top"><span class="item-icon">📢</span>
+{% if session.get("role") == "admin" %}<form method="POST" action="/delete-announcement/{{ announcement['id'] }}" onsubmit="return confirm('Delete this announcement?');"><button type="submit" class="delete-button">Delete</button></form>{% endif %}
+</div>
+<h3>{{ announcement["title"] }}</h3>
+<p class="main-copy">{{ announcement["content"] }}</p>
+<div class="meta-row"><span>Posted by {{ announcement["posted_by"] }}</span></div>
+</article>
+{% endfor %}
+</div>
+{% else %}<div class="empty-state"><span>📢</span><h3>No announcements yet</h3><p>Important notices will appear here when published.</p></div>{% endif %}
+</main>
+</body>
+</html>

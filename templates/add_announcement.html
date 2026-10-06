@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Add Announcement | CollegeConnect</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="form-page">
+<header class="form-hero">
+<div class="form-hero-inner">
+<div class="section-kicker">FACULTY CONTROL CENTER</div>
+<h1>Create Announcement</h1>
+<p>Publish an important campus update.</p>
+</div>
+</header>
+<main class="form-main">
+<div class="form-navigation">
+<a href="/admin" class="back-link">← Faculty Dashboard</a>
+<a href="/announcements" class="secondary-link">View Announcements</a>
+</div>
+<section class="form-shell">
+<div class="form-shell-heading">
+<span class="eyebrow">NEW ENTRY</span>
+<h2>Announcement details</h2>
+<p>Fill in the details below and publish when everything is ready.</p>
+</div>
+<form method="POST" class="elegant-form">
+<div class="form-field"><label for="title">Announcement Title</label><input id="title" type="text" name="title" placeholder="Enter a clear announcement title" required></div>
+<div class="form-field"><label for="content">Announcement Details</label><textarea id="content" name="content" placeholder="Write the announcement details..." required></textarea></div>
+<div class="form-field"><label for="posted_by">Posted By</label><input id="posted_by" type="text" name="posted_by" placeholder="Faculty / Management" required></div>
+<button type="submit" class="form-submit"><span>Publish Announcement</span><span>→</span></button>
+</form>
+</section>
+</main>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class Timetable | CollegeConnect</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="section-page">
+<header class="section-hero">
+    <div class="section-hero-inner">
+        <div class="section-kicker">WEEKLY ACADEMIC PLAN</div>
+        <h1>Class Timetable</h1>
+        <p>View classes, faculty, rooms and weekly schedule information.</p>
+    </div>
+</header>
+<main class="section-main">
+    <div class="page-toolbar">
+        {% if session.get("role") == "admin" %}
+        <a href="/admin" class="back-link">← Faculty Dashboard</a>
+        {% else %}
+        <a href="/" class="back-link">← CollegeConnect Home</a>
+        {% endif %}
+        {% if session.get("role") == "admin" %}<a href="/add-timetable" class="add-button">+ Add Class</a>{% endif %}
+    </div>
+    <section class="content-heading">
+        <div>
+            <span class="eyebrow">WEEKLY SCHEDULE</span>
+            <h2>Class timetable</h2>
+        </div>
+        <span class="record-label">WEEKLY</span>
+    </section>
+    {% if timetable %}
+<div class="data-list">
+{% for class in timetable %}
+<article class="data-card">
+<div class="card-accent"></div>
+<div class="data-card-top"><span class="item-icon">🕐</span>
+{% if session.get("role") == "admin" %}<form method="POST" action="/delete-timetable/{{ class['id'] }}" onsubmit="return confirm('Delete this timetable entry?');"><button type="submit" class="delete-button">Delete</button></form>{% endif %}
+</div>
+<h3>{{ class["subject"] }}</h3>
+<div class="detail-grid">
+<div><span>DAY</span><strong>📅 {{ class["day"] }}</strong></div>
+<div><span>TIME</span><strong>🕐 {{ class["time"] }}</strong></div>
+<div><span>FACULTY</span><strong>👨‍🏫 {{ class["faculty"] }}</strong></div>
+<div><span>ROOM</span><strong>🚪 {{ class["room"] }}</strong></div>
+</div>
+</article>
+{% endfor %}
+</div>
+{% else %}<div class="empty-state"><span>🕐</span><h3>No timetable entries yet</h3><p>The weekly class schedule will appear here.</p></div>{% endif %}
+</main>
+</body>
+</html>

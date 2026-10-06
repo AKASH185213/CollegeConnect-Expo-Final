@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events | CollegeConnect</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="section-page">
+<header class="section-hero">
+    <div class="section-hero-inner">
+        <div class="section-kicker">CAMPUS LIFE</div>
+        <h1>Events</h1>
+        <p>Discover activities, programmes and upcoming events across the campus.</p>
+    </div>
+</header>
+<main class="section-main">
+    <div class="page-toolbar">
+        {% if session.get("role") == "admin" %}
+        <a href="/admin" class="back-link">← Faculty Dashboard</a>
+        {% else %}
+        <a href="/" class="back-link">← CollegeConnect Home</a>
+        {% endif %}
+        {% if session.get("role") == "admin" %}<a href="/add-event" class="add-button">+ Add Event</a>{% endif %}
+    </div>
+    <section class="content-heading">
+        <div>
+            <span class="eyebrow">UPCOMING ACTIVITIES</span>
+            <h2>Campus events</h2>
+        </div>
+        <span class="record-label">EVENTS</span>
+    </section>
+    {% if events %}
+<div class="data-list">
+{% for event in events %}
+<article class="data-card">
+<div class="card-accent"></div>
+<div class="data-card-top"><span class="item-icon">🎉</span>
+{% if session.get("role") == "admin" %}<form method="POST" action="/delete-event/{{ event['id'] }}" onsubmit="return confirm('Delete this event?');"><button type="submit" class="delete-button">Delete</button></form>{% endif %}
+</div>
+<h3>{{ event["name"] }}</h3>
+<div class="detail-grid">
+<div><span>DATE</span><strong>📅 {{ event["date"] }}</strong></div>
+<div><span>TIME</span><strong>🕐 {{ event["time"] }}</strong></div>
+<div><span>LOCATION</span><strong>📍 {{ event["location"] }}</strong></div>
+<div><span>ORGANISED BY</span><strong>{{ event["organized_by"] }}</strong></div>
+</div>
+<p class="main-copy">{{ event["description"] }}</p>
+</article>
+{% endfor %}
+</div>
+{% else %}<div class="empty-state"><span>🎉</span><h3>No events yet</h3><p>Upcoming campus events will appear here.</p></div>{% endif %}
+</main>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Add Exam | CollegeConnect</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="form-page">
+<header class="form-hero">
+<div class="form-hero-inner">
+<div class="section-kicker">FACULTY CONTROL CENTER</div>
+<h1>Create Exam Schedule</h1>
+<p>Add an examination to the academic timetable.</p>
+</div>
+</header>
+<main class="form-main">
+<div class="form-navigation">
+<a href="/admin" class="back-link">← Faculty Dashboard</a>
+<a href="/exams" class="secondary-link">View Exam Timetable</a>
+</div>
+<section class="form-shell">
+<div class="form-shell-heading">
+<span class="eyebrow">NEW ENTRY</span>
+<h2>Examination details</h2>
+<p>Fill in the details below and publish when everything is ready.</p>
+</div>
+<form method="POST" class="elegant-form">
+<div class="form-field"><label for="subject">Subject</label><input id="subject" type="text" name="subject" placeholder="Example: Engineering Mathematics-I" required></div>
+<div class="form-row"><div class="form-field"><label for="date">Date</label><input id="date" type="date" name="date" required></div><div class="form-field"><label for="time">Time</label><input id="time" type="time" name="time" required></div></div>
+<div class="form-row"><div class="form-field"><label for="room">Room</label><input id="room" type="text" name="room" placeholder="Example: Room 101" required></div><div class="form-field"><label for="exam_type">Exam Type</label><select id="exam_type" name="exam_type" required><option value="">Select exam type</option><option value="Mid Exam">Mid Exam</option><option value="Semester Exam">Semester Exam</option><option value="Internal Exam">Internal Exam</option><option value="Practical Exam">Practical Exam</option></select></div></div>
+<button type="submit" class="form-submit"><span>Add Exam</span><span>→</span></button>
+</form>
+</section>
+</main>
+</body>
+</html>

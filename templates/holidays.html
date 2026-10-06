@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Holidays | CollegeConnect</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="section-page">
+<header class="section-hero">
+    <div class="section-hero-inner">
+        <div class="section-kicker">ACADEMIC CALENDAR</div>
+        <h1>Holidays</h1>
+        <p>Keep track of scheduled academic and campus holidays.</p>
+    </div>
+</header>
+<main class="section-main">
+    <div class="page-toolbar">
+        {% if session.get("role") == "admin" %}
+        <a href="/admin" class="back-link">← Faculty Dashboard</a>
+        {% else %}
+        <a href="/" class="back-link">← CollegeConnect Home</a>
+        {% endif %}
+        {% if session.get("role") == "admin" %}<a href="/add-holiday" class="add-button">+ Add Holiday</a>{% endif %}
+    </div>
+    <section class="content-heading">
+        <div>
+            <span class="eyebrow">ACADEMIC CALENDAR</span>
+            <h2>Holiday schedule</h2>
+        </div>
+        <span class="record-label">CALENDAR</span>
+    </section>
+    {% if holidays %}
+<div class="data-list">
+{% for holiday in holidays %}
+<article class="data-card compact-card">
+<div class="card-accent"></div>
+<div class="data-card-top"><span class="item-icon">🏖️</span>
+{% if session.get("role") == "admin" %}<form method="POST" action="/delete-holiday/{{ holiday['id'] }}" onsubmit="return confirm('Delete this holiday?');"><button type="submit" class="delete-button">Delete</button></form>{% endif %}
+</div>
+<h3>{{ holiday["name"] }}</h3>
+<div class="date-banner">📅 {{ holiday["date"] }}</div>
+<p class="main-copy">{{ holiday["description"] }}</p>
+</article>
+{% endfor %}
+</div>
+{% else %}<div class="empty-state"><span>🏖️</span><h3>No holidays added yet</h3><p>The academic holiday calendar will appear here.</p></div>{% endif %}
+</main>
+</body>
+</html>

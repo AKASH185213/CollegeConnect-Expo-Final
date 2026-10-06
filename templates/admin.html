@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Faculty Dashboard | CollegeConnect</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="admin-page">
+
+<header class="faculty-topbar">
+    <div class="faculty-topbar-inner">
+        <a href="/admin" class="faculty-brand">
+            <span class="faculty-brand-mark">CC</span>
+            <span><strong>CollegeConnect</strong><small>Faculty Control Center</small></span>
+        </a>
+
+        <div class="faculty-top-actions">
+            <div class="faculty-user">
+                <span class="faculty-user-icon">👨‍🏫</span>
+                <span><small>Logged in as</small><strong>{{ username }}</strong></span>
+            </div>
+            <div class="session-timer">⏱ <span id="session-countdown">02:30:00</span></div>
+            <a href="/logout" class="top-logout">Logout</a>
+        </div>
+    </div>
+</header>
+
+<main class="faculty-main">
+    <section class="faculty-intro">
+        <div>
+            <span class="eyebrow light">SMART DIGITAL CAMPUS</span>
+            <h1>Faculty <span>Dashboard</span></h1>
+            <p>Manage and publish important campus information for students through CollegeConnect.</p>
+        </div>
+        <div class="dashboard-status"><span></span> Dashboard Active</div>
+    </section>
+
+    <section class="management-grid">
+        <article class="management-card"><div class="management-top"><span class="management-icon">📢</span><b>01</b></div><h2>Announcements</h2><p>Publish important notices, updates and messages for students.</p><div class="management-actions"><a href="/add-announcement" class="action-primary">+ Add</a><a href="/announcements" class="action-secondary">View</a></div></article>
+        <article class="management-card"><div class="management-top"><span class="management-icon">🎉</span><b>02</b></div><h2>Events</h2><p>Create and publish upcoming campus events and activities.</p><div class="management-actions"><a href="/add-event" class="action-primary">+ Add</a><a href="/events" class="action-secondary">View</a></div></article>
+        <article class="management-card"><div class="management-top"><span class="management-icon">🏖️</span><b>03</b></div><h2>Holidays</h2><p>Maintain scheduled academic and campus holiday information.</p><div class="management-actions"><a href="/add-holiday" class="action-primary">+ Add</a><a href="/holidays" class="action-secondary">View</a></div></article>
+        <article class="management-card"><div class="management-top"><span class="management-icon">📝</span><b>04</b></div><h2>Exam Timetable</h2><p>Manage examination dates, subjects, rooms and schedules.</p><div class="management-actions"><a href="/add-exam" class="action-primary">+ Add</a><a href="/exams" class="action-secondary">View</a></div></article>
+        <article class="management-card"><div class="management-top"><span class="management-icon">🕐</span><b>05</b></div><h2>Class Timetable</h2><p>Manage weekly classes, subjects, faculty and rooms.</p><div class="management-actions"><a href="/add-timetable" class="action-primary">+ Add</a><a href="/timetable" class="action-secondary">View</a></div></article>
+        <article class="management-card"><div class="management-top"><span class="management-icon">📄</span><b>06</b></div><h2>Documents</h2><p>Publish important academic documents, resources and links.</p><div class="management-actions"><a href="/add-document" class="action-primary">+ Add</a><a href="/documents" class="action-secondary">View</a></div></article>
+    </section>
+</main>
+
+<div id="session-warning" class="session-warning">
+    <div class="warning-mark">⏰</div>
+    <h2>Session Expiring</h2>
+    <p>Your faculty session will expire in:</p>
+    <div id="countdown">05:00</div>
+    <p>Do you want to continue your session?</p>
+    <div class="session-buttons">
+        <form method="POST" action="/continue-session"><button type="submit">Continue Session</button></form>
+        <a href="/logout" class="warning-logout">Logout</a>
+    </div>
+</div>
+
+<script>
+const loginTime = {{ login_time }};
+const sessionDuration = 9000;
+const warningTime = 300;
+
+function checkSession() {
+    const currentTime = Math.floor(Date.now() / 1000);
+    const elapsed = Math.floor(currentTime - loginTime);
+    const remaining = Math.floor(sessionDuration - elapsed);
+
+    if (remaining > 0) {
+        const hours = Math.floor(remaining / 3600);
+        const minutes = Math.floor((remaining % 3600) / 60);
+        const seconds = remaining % 60;
+        document.getElementById("session-countdown").textContent =
+            String(hours).padStart(2,"0") + ":" +
+            String(minutes).padStart(2,"0") + ":" +
+            String(seconds).padStart(2,"0");
+    }
+
+    const warningBox = document.getElementById("session-warning");
+    if (remaining <= warningTime && remaining > 0) {
+        warningBox.style.display = "block";
+        const warningMinutes = Math.floor(remaining / 60);
+        const warningSeconds = remaining % 60;
+        document.getElementById("countdown").textContent =
+            String(warningMinutes).padStart(2,"0") + ":" +
+            String(warningSeconds).padStart(2,"0");
+    }
+
+    if (remaining <= 0) window.location.href = "/logout";
+}
+setInterval(checkSession, 1000);
+checkSession();
+</script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Add Document | CollegeConnect</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="form-page">
+<header class="form-hero">
+<div class="form-hero-inner">
+<div class="section-kicker">FACULTY CONTROL CENTER</div>
+<h1>Add Document</h1>
+<p>Add an important academic resource or useful link.</p>
+</div>
+</header>
+<main class="form-main">
+<div class="form-navigation">
+<a href="/admin" class="back-link">← Faculty Dashboard</a>
+<a href="/documents" class="secondary-link">View Documents</a>
+</div>
+<section class="form-shell">
+<div class="form-shell-heading">
+<span class="eyebrow">NEW ENTRY</span>
+<h2>Document details</h2>
+<p>Fill in the details below and publish when everything is ready.</p>
+</div>
+<form method="POST" class="elegant-form">
+<div class="form-field"><label for="title">Document Title</label><input id="title" type="text" name="title" placeholder="Example: Academic Regulations" required></div>
+<div class="form-field"><label for="description">Description</label><textarea id="description" name="description" placeholder="Briefly describe this resource..." required></textarea></div>
+<div class="form-field"><label for="link">Document Link</label><input id="link" type="url" name="link" placeholder="https://example.com/document.pdf" required></div>
+<button type="submit" class="form-submit"><span>Add Document</span><span>→</span></button>
+</form>
+</section>
+</main>
+</body>
+</html>
